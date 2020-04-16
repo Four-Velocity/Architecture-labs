@@ -14,7 +14,7 @@ float average_c(int *arr) {
 
 int max_c(int *arr) {
 /***********************************
-* Get average value of array using C
+* Get maximum value of array using C
 ***********************************/
     int value = 0;
     for (int i=0; i < 10; ++i) {
@@ -26,7 +26,7 @@ int max_c(int *arr) {
 
 float average_a(int *arr) {
 /******************************************
-* Get maximum value of array using Assembly
+* Get average value of array using Assembly
 ******************************************/
     int sum, rem;
     float f_rem, result;
