@@ -1,1 +1,1 @@
-# [Перейдіть до файлу main.ipybn](main.ipybn)
+# [Перейдіть до файлу main.ipynb](main.ipynb)
