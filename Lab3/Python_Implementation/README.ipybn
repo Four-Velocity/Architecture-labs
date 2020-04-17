@@ -1,1 +1,77 @@
+#%% md
+# Конвертер
+Цей код може конвертувати числа між системами числення починаючи з 2, закінчуючи 60
+
+## Виконання
+Створимо класс, який виконує конвертування.
+
+#%%
+
+class Converter:
+    translation = (
+        '0','1','2','3','4','5','6','7','8','9',
+        'A','B','C','D','E','F','G','H','I','J',
+        'K','L','M','N','O','P','Q','R','S','T',
+        'U','V','W','X','Y','Z','a','b','c','d',
+        'e','f','g','h','i','j','k','l','m','n',
+        'o','p','q','r','s','t','u','v','w','x',
+    )
+
+    # initialize class
+    def __init__(self, number: str, base1: int, base2: int):
+        self.number_b1 = number
+        self.base1 = base1
+        self.number_b2 = 0
+        self.base2 = base2
+        self.number_b10 = 0
+
+    def translate_to_ten(self):
+        number_arr = [self.translation.index(i) for i in self.number_b1]
+        number_arr.reverse()
+        for i, num in zip(range(len(number_arr)), number_arr):
+            self.number_b10 += num*(self.base1**i)
+            if num > self.base1-1:
+                raise ArithmeticError(f"You cant use '{self.translation[num]}' in {self.base1} system")
+
+    def translate_to_base(self, next = None, result = None ):
+        if next is None or result is None:
+	        next = self.number_b10
+	        result = []
+        if next>=self.base2:
+            result.append(next % self.base2)
+            next //= self.base2
+            self.translate_to_base(next, result)
+        else:
+            result.append(next)
+            result.reverse()
+            result = list(map(lambda x: self.translation[x], result))
+            self.number_b2 = int(''.join(result))
+
+    def full_translate(self):
+        self.translate_to_ten()
+        self.translate_to_base()
+
+#%% md
+Отримаємо данні вводу
+#%%
+
+num = input("Введіть число використовуючи 0-9, A-Z, a-x: ")
+b1 = input("Введіть у якій системі знаходиться число (2-60): ")
+b2 = input("Введіть у яку систему ви хочете перевести число: ")
+#%% md
+Ініціюємо конвертер, та виконаємо конвертацію
+#%%
+converter = Converter(num, int(b1), int(b2))
+converter.full_translate()
+
+#%% md
+
+Виведемо результат
+
+#%%
+
+print(f'Base_{b1} number: {converter.number_b1}')
+print(f'Base_{10} number: {converter.number_b10}')
+print(f'Base_{b2} number: {converter.number_b2}')
+
 
